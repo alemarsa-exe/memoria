@@ -50,9 +50,7 @@ def tap(x, y):
     writer.write(cont['clicks'])
     clear()
 
-    cont['clicks'] +=1;
-    x = (index % 20) * 20 - 200
-    y = 180 - (index // 20) * 20
+    cont['clicks'] +=1
 
 def draw():
     "Draw image and tiles."
