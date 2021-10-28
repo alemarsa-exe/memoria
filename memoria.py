@@ -1,14 +1,15 @@
 
-from random import *
 from turtle import *
+from random import *
 
 from freegames import path
 
 car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
+cont = {'clicks': 0}
 hide = [True] * 64
-
+writer = Turtle(visible=False)
 
 def square(x, y):
     "Draw white square with black outline at (x, y)."
@@ -44,7 +45,14 @@ def tap(x, y):
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
+    
+    writer.undo()
+    writer.write(cont['clicks'])
+    clear()
 
+    cont['clicks'] +=1;
+    x = (index % 20) * 20 - 200
+    y = 180 - (index // 20) * 20
 
 def draw():
     "Draw image and tiles."
@@ -68,13 +76,16 @@ def draw():
         write(tiles[mark], font=('Arial', 30, 'normal'))
 
     update()
-    ontimer(draw, 100)
+    ontimer(draw, 100)    
 
 shuffle(tiles)
 setup(420, 420, 370, 0)
 addshape(car)
 hideturtle()
 tracer(False)
+writer.goto(160, 160)
+writer.color('black')
+writer.write(cont['clicks'])
 onscreenclick(tap)
 draw()
 done()
