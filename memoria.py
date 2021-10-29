@@ -1,3 +1,6 @@
+#Equipo 7
+# Abiel Moisés Borja García     A01654937
+# Alejandro Mariacca Santin     A01654102
 
 from turtle import *
 from random import *
@@ -7,8 +10,9 @@ from freegames import path
 car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
-cont = {'clicks': 0}
 hide = [True] * 64
+cont = {'clicks': 0}
+contNum = 0
 
 taps = 0
 counter_tiles = 0
@@ -54,6 +58,9 @@ def tap(x, y):
         state['mark'] = None
 
         counter_tiles = counter_tiles + 2
+
+    print(cont)
+    cont['clicks'] +=1
     
 
 
