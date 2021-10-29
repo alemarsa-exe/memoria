@@ -9,7 +9,9 @@ tiles = list(range(32)) * 2
 state = {'mark': None}
 cont = {'clicks': 0}
 hide = [True] * 64
-writer = Turtle(visible=False)
+
+taps = 0
+counter_tiles = 0
 
 def square(x, y):
     "Draw white square with black outline at (x, y)."
@@ -35,22 +37,25 @@ def xy(count):
 
 
 def tap(x, y):
+    global mark, taps, counter_tiles
     "Update mark and hidden tiles based on tap."
+
+    taps = taps + 1
+
     spot = index(x, y)
     mark = state['mark']
 
     if mark is None or mark == spot or tiles[mark] != tiles[spot]:
         state['mark'] = spot
+
     else:
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
-    
-    writer.undo()
-    writer.write(cont['clicks'])
-    clear()
 
-    cont['clicks'] +=1
+        counter_tiles = counter_tiles + 2
+    
+
 
 def draw():
     "Draw image and tiles."
@@ -73,6 +78,16 @@ def draw():
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
 
+    if counter_tiles == 64:
+        up()
+        goto(-190, 165)
+        color('white')
+        write("Felicades, has acabado el juego", font = ('Arial', 10, 'normal') )
+        goto(-190, 130)
+        color('white')
+        write("Has hecho {} taps".format(taps), font = ('Arial', 10, 'normal') )
+
+
     update()
     ontimer(draw, 100)    
 
@@ -81,9 +96,6 @@ setup(420, 420, 370, 0)
 addshape(car)
 hideturtle()
 tracer(False)
-writer.goto(160, 160)
-writer.color('black')
-writer.write(cont['clicks'])
 onscreenclick(tap)
 draw()
 done()
