@@ -8,6 +8,7 @@ car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 cont = {'clicks': 0}
+contNum = 0
 hide = [True] * 64
 writer = Turtle(visible=False)
 
@@ -45,11 +46,13 @@ def tap(x, y):
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
-    
-    writer.undo()
-    writer.write(cont['clicks'])
-    clear()
 
+    for count in range(64):
+        if mark is None and mark == spot and tiles[mark] != tiles[spot]:
+            print("Fin del juego")
+
+    
+    print(cont)
     cont['clicks'] +=1
 
 def draw():
@@ -71,7 +74,7 @@ def draw():
         up()
         goto(x + 2, y)
         color('black')
-        write(tiles[mark], font=('Arial', 30, 'normal'))
+        write(tiles[mark], font=('Arial', 30, 'normal'), align='left')
 
     update()
     ontimer(draw, 100)    
@@ -81,9 +84,6 @@ setup(420, 420, 370, 0)
 addshape(car)
 hideturtle()
 tracer(False)
-writer.goto(160, 160)
-writer.color('black')
-writer.write(cont['clicks'])
 onscreenclick(tap)
 draw()
 done()
